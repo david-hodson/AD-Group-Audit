@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AD Group Audit Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .header { background-color: #2c3e50; color: white; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+        .summary { background-color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .problem-groups { background-color: white; padding: 15px; border-radius: 5px; border-left: 4px solid #e74c3c; }
+        table { width: 100%; border-collapse: collapse; background-color: white; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: white; }
+        .status-empty { background-color: #fff3cd; color: #856404; }
+        .status-disabled { background-color: #f8d7da; color: #721c24; }
+        .status-has-disabled { background-color: #d1ecf1; color: #0c5460; }
+        .status-healthy { background-color: #d4edda; color: #155724; }
+        .nested-groups { font-style: italic; color: #6c757d; max-width: 200px; word-wrap: break-word; }
+        .disabled-users { max-width: 200px; word-wrap: break-word; }
+        .disabled-none { color: #155724; }
+        .disabled-found { color: #dc3545; }
+        .group-name { font-weight: bold; color: #2c3e50; }
+        .stats { display: flex; gap: 20px; margin-bottom: 20px; }
+        .stat-box { background-color: white; padding: 15px; border-radius: 5px; text-align: center; flex: 1; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #2c3e50; }
+        .stat-label { color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Active Directory Group Audit Report</h1>
+        <p>Domain: contoso.com | Generated: 2024-12-19 14:32:15</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Total Groups</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">89</div>
+            <div class="stat-label">Problem Groups</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">34</div>
+            <div class="stat-label">Empty Groups</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">23</div>
+            <div class="stat-label">Only Disabled</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">18</div>
+            <div class="stat-label">Name Issues</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">156</div>
+            <div class="stat-label">With Nested Groups</div>
+        </div>
+    </div>
+    
+    <div class="problem-groups">
+        <h2>Detailed Group Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Status</th>
+                    <th>Total Members</th>
+                    <th>Users (E/D)</th>
+                    <th>Computers (E/D)</th>
+                    <th>Disabled Users</th>
+                    <th>Disabled Computers</th>
+                    <th>Name Compliant</th>
+                    <th>Nested Groups</th>
+                    <th>Issue</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="group-name">Accounting Team</td>
+                    <td class="status-healthy">Healthy</td>
+                    <td>12</td>
+                    <td>12/0</td>
+                    <td>0/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">None</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-name">Finance Admin Group</td>
+                    <td class="status-empty">Name Issues</td>
+                    <td>8</td>
+                    <td>8/0</td>
+                    <td>0/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-empty">✗ No: Contains spaces</td>
+                    <td class="nested-groups">None</td>
+                    <td>Contains spaces</td>
+                    <td>Consider using underscores or hyphens instead of spaces</td>
+                </tr>
+                <tr>
+                    <td class="group-name">IT-Support@Legacy</td>
+                    <td class="status-empty">Name Issues</td>
+                    <td>15</td>
+                    <td>14/1</td>
+                    <td>0/0</td>
+                    <td class="disabled-found">j.smith</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-empty">✗ No: Contains special characters: @</td>
+                    <td class="nested-groups">Help-Desk (5 members)</td>
+                    <td>1 disabled user(s) and 0 disabled computer(s) in group; Contains special characters: @</td>
+                    <td>Remove disabled accounts; Remove or replace special characters with hyphens or underscores</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Legacy-Users-Old</td>
+                    <td class="status-disabled">Only Disabled</td>
+                    <td>6</td>
+                    <td>0/6</td>
+                    <td>0/0</td>
+                    <td class="disabled-found">m.johnson; k.davis; r.wilson; s.brown; t.miller; p.garcia</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">None</td>
+                    <td>Group contains only disabled accounts</td>
+                    <td>Remove disabled accounts or delete group</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Old-Project-Team</td>
+                    <td class="status-empty">Empty</td>
+                    <td>0</td>
+                    <td>0/0</td>
+                    <td>0/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">None</td>
+                    <td>Group has no members</td>
+                    <td>Consider removing this group</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Server-Admins</td>
+                    <td class="status-has-disabled">Has Disabled</td>
+                    <td>18</td>
+                    <td>15/2</td>
+                    <td>1/0</td>
+                    <td class="disabled-found">old.admin; temp.user</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">Domain-Admins (12 members); Backup-Operators (4 members)</td>
+                    <td>2 disabled user(s) and 0 disabled computer(s) in group</td>
+                    <td>Remove disabled accounts</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Workstation Access</td>
+                    <td class="status-empty">Name Issues</td>
+                    <td>45</td>
+                    <td>42/0</td>
+                    <td>3/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-empty">✗ No: Contains spaces</td>
+                    <td class="nested-groups">None</td>
+                    <td>Contains spaces</td>
+                    <td>Consider using underscores or hyphens instead of spaces</td>
+                </tr>
+                <tr>
+                    <td class="group-name">HR-Department</td>
+                    <td class="status-has-disabled">Has Disabled</td>
+                    <td>23</td>
+                    <td>20/3</td>
+                    <td>0/0</td>
+                    <td class="disabled-found">ex.employee; contractor.temp; intern.summer</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">HR-Managers (4 members)</td>
+                    <td>3 disabled user(s) and 0 disabled computer(s) in group</td>
+                    <td>Remove disabled accounts</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Development Team</td>
+                    <td class="status-healthy">Healthy</td>
+                    <td>28</td>
+                    <td>25/0</td>
+                    <td>3/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">Senior-Devs (8 members); QA-Team (6 members)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="group-name">Marketing & Sales</td>
+                    <td class="status-empty">Name Issues</td>
+                    <td>19</td>
+                    <td>19/0</td>
+                    <td>0/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-empty">✗ No: Contains special characters: &</td>
+                    <td class="nested-groups">None</td>
+                    <td>Contains special characters: &</td>
+                    <td>Remove or replace special characters with hyphens or underscores</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Test-Lab-Computers</td>
+                    <td class="status-has-disabled">Has Disabled</td>
+                    <td>12</td>
+                    <td>0/0</td>
+                    <td>10/2</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-found">OLD-PC-01; BROKEN-WS-05</td>
+                    <td class="status-healthy">✓ Yes</td>
+                    <td class="nested-groups">None</td>
+                    <td>0 disabled user(s) and 2 disabled computer(s) in group</td>
+                    <td>Remove disabled accounts</td>
+                </tr>
+                <tr>
+                    <td class="group-name">Temp123</td>
+                    <td class="status-empty">Empty + Name Issues</td>
+                    <td>0</td>
+                    <td>0/0</td>
+                    <td>0/0</td>
+                    <td class="disabled-none">None</td>
+                    <td class="disabled-none">None</td>
+                    <td class="status-empty">✗ No: Name contains only numbers</td>
+                    <td class="nested-groups">None</td>
+                    <td>Group has no members; Name contains only numbers</td>
+                    <td>Consider removing this group; Add descriptive text to the group name</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
